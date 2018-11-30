@@ -73,7 +73,7 @@ class App extends Component {
       end: parseInt((this.state.endDate.getTime() / 1000).toFixed(0))
     })
     
-    axios.post('http://127.0.0.1:8080', data, {
+    axios.post('http://18.223.169.36:80', data, {
       headers: {
         'Content-Type': 'application/json;charset=UTF-8',
         "Access-Control-Allow-Origin": "*",
