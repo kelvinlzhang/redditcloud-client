@@ -153,34 +153,65 @@ class ChartContainer extends Component {
     colors.length = calcSent.length;
 
     function sentColor(sent){
-      if(sent <= -0.8){
-        return "rgba(92, 10, 10, 1)";
+      if(sent <= -0.9){
+        return "rgba(45, 6, 6, 1)";
       }
-      else if(sent > -0.8 && sent <= -0.6){
-        return "rgba(137, 15, 15, 1)";
+      else if(sent > -0.9 && sent <= -0.8){
+        return "rgba(62, 8, 8, 1)";
       }
-      else if(sent > -0.6 && sent <= -0.4){
-          return "rgba(201, 16, 16, 1)";
+      else if(sent > -0.8 && sent <= -0.7){
+          return "rgba(92, 10, 10, 1)";
       }
-      else if(sent > -0.4 && sent <= -0.2){
-        return "rgba(242, 140, 140, 1)";
+      else if(sent > -0.7 && sent <= -0.6){
+        return "rgba(112, 15, 15, 1)";
       }
-      else if(sent > -0.2 && sent <= 0){
-          return "rgba(255, 230, 230, 1)";
+      else if(sent > -0.6 && sent <= -0.5){
+        return "rgba(135, 18, 18, 1)";
       }
-      else if(sent > 0 && sent <= 0.2){
-        return "rgba(159, 237, 120, 1)";
+      else if(sent > -0.5 && sent <= -0.4){
+          return "rgba(157, 21, 21, 1)";
       }
-      else if(sent > 0.2 && sent <= 0.4){
-          return "rgba(95, 224, 31, 1)";
+      else if(sent > -0.4 && sent <= -0.3){
+        return "rgba(180, 24, 24, 1)";
       }
-      else if(sent > 0.4 && sent <= 0.6){
+      else if(sent > -0.3 && sent <= -0.2){
+          return "rgba(202, 28, 28, 1)";
+      }
+      else if(sent > -0.2 && sent <= -0.1){
+        return "rgba(224, 31, 31, 1)";
+      }
+      else if(sent > -0.1 && sent <= 0){
+          return "rgba(234, 98, 98, 1)";
+      }
+      else if(sent > 0 && sent <= 0.1){
         return "rgba(56, 132, 18, 1)";
       }
-      else if(sent > 0.6 && sent <= 0.8){
-          return "rgba(25, 73, 1, 1)";
+      else if(sent > 0.1 && sent <= 0.2){
+          return "rgba(171, 251, 132, 1)";
       }
-      else if(sent > 0.8 && sent <= 1){
+      else if(sent > 0.2 && sent <= 0.3){
+        return "rgba(105, 247, 34, 1)";
+      }
+      else if(sent > 0.3 && sent <= 0.4){
+          return "rgba(79, 221, 8, 1)";
+      }
+      else if(sent > 0.4 && sent <= 0.5){
+        return "rgba(70, 197, 7, 1)";
+      }
+      else if(sent > 0.5 && sent <= 0.6){
+          return "rgba(62, 172, 6, 1)";
+      }
+      else if(sent > 0.6 && sent <= 0.7){
+        return "rgba(44, 124, 4, 1)";
+      }
+      else if(sent > 0.7 && sent <= 0.8){
+          return "rgba(35, 99, 3, 1)";
+      }
+
+      else if(sent > 0.8 && sent <= 0.9){
+          return "rgba(26, 75, 2, 1)";
+      }
+      else if(sent > 0.9 && sent <= 1){
         return "rgba(17, 50, 1, 1)";
       }
     }
