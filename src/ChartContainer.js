@@ -13,10 +13,10 @@ class ChartContainer extends Component {
     super();
     this.state = {
       chartData:{},
-      word: data.words[1].word, // this.props .. passed down from WordCloud
-      x: data.words[1].timestamps,
-      vote: data.words[1].vote, //need to calculate
-      s: data.words[1].score, //score
+      word: data.words[2].word, // this.props .. passed down from WordCloud
+      ts: data.words[2].timestamps,
+      vote: data.words[2].vote,
+      s: data.words[2].score,
     }
   }
   componentWillMount(){
@@ -25,19 +25,19 @@ class ChartContainer extends Component {
 
   getChartData(){
 
-    //CONVERT TIMESTAMP INTO READABLE DATES
+    //////////////////////////////////////////
+    //VARIABLES THAT WILL BE USED THROUGHOUT//
+    /////////////////////////////////////////
 
+    var time = this.state.ts;
+    var sentiments = this.state.s;
+    var votes = this.state.vote;
+    var i;  //iterator for loops
 
-    var time = this.state.x;
-    var ts = [];
-    ts.length = time.length;
+    //////////////////////
+    //RANGE CALCULATION//
+    ////////////////////
 
-    var i;
-
-
-    //CALCULATE SENTIMENT
-
-    //Range calculation:
     var beg = time[0];
     var end = time[time.length-1];
     var totalRange = end - beg;
@@ -47,91 +47,84 @@ class ChartContainer extends Component {
       totalRange += (10-(totalRange%10));
     }
 
-    var unitRange = totalRange/10;
-
     var ranges = [];
     ranges.length = 11;
 
     ranges[0] = beg;
     for(i = 1; i < ranges.length; i++){
-      ranges[i] = ranges[i-1] + unitRange;
+      ranges[i] = ranges[i-1] + (totalRange/10);
     }
 
-    console.log('bleep', end);
-    console.log('bloop', ranges[10]);
+    ///////////////////////////////////////
+    //FREQUENCY AND SENTIMENT CALCULATION//
+    //////////////////////////////////////
 
-
-    //time is the array with original timestamps
-
-    var freq = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-    var tbd = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+    var freq = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]; //holds how often a word appears per time range
+    var calcSent = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]; //hold final calculations for sentiment values to be displayed
 
     function divideSegments(ranges, t, v, sc){
       if(t >= ranges[0] && t < ranges[1]){
         freq[0]++;
-        tbd[0] += (sc*v)/Math.abs(v);
+        calcSent[0] += (sc*v)/Math.abs(v);
       }
       else if(t >= ranges[1] && t < ranges[2]){
         freq[1]++;
-        tbd[1] += (sc*v)/Math.abs(v);
+        calcSent[1] += (sc*v)/Math.abs(v);
       }
       else if(t >= ranges[2] && t < ranges[3]){
         freq[2]++;
-        tbd[2] += (sc*v)/Math.abs(v);
+        calcSent[2] += (sc*v)/Math.abs(v);
       }
       else if(t >= ranges[3] && t < ranges[4]){
         freq[3]++;
-        tbd[3] += (sc*v)/Math.abs(v);
+        calcSent[3] += (sc*v)/Math.abs(v);
       }
       else if(t >= ranges[4] && t < ranges[5]){
         freq[4]++;
-        tbd[4] += (sc*v)/Math.abs(v);
+        calcSent[4] += (sc*v)/Math.abs(v);
       }
       else if(t >= ranges[5] && t < ranges[6]){
         freq[5]++;
-        tbd[5] += (sc*v)/Math.abs(v);
+        calcSent[5] += (sc*v)/Math.abs(v);
       }
       else if(t >= ranges[6] && t < ranges[7]){
         freq[6]++;
-        tbd[6] += (sc*v)/Math.abs(v);
+        calcSent[6] += (sc*v)/Math.abs(v);
       }
       else if(t >= ranges[7] && t < ranges[8]){
         freq[7]++;
-        tbd[7] += (sc*v)/Math.abs(v);
+        calcSent[7] += (sc*v)/Math.abs(v);
       }
       else if(t >= ranges[8] && t < ranges[9]){
         freq[8]++;
-        tbd[8] += (sc*v)/Math.abs(v);
+        calcSent[8] += (sc*v)/Math.abs(v);
       }
       else if(t >= ranges[9] && t <= ranges[10]){
         freq[9]++;
-        tbd[9] += (sc*v)/Math.abs(v);
+        calcSent[9] += (sc*v)/Math.abs(v);
       }
 
     }
-    var sentiments = this.state.s;
-    var votes = this.state.vote;
+
     for(i = 0; i < time.length; i++){
       divideSegments(ranges, time[i], votes[i], sentiments[i]);
-
     }
 
-    //need to average out scores
-    for(i = 0; i < tbd.length; i++){
-      tbd[i] /= freq[i];
-      console.log('boobs', freq[i], 'poops', tbd[i]);
+    //average out all the summed sentiments per range
+    for(i = 0; i < calcSent.length; i++){
+      calcSent[i] /= freq[i];
+      console.log('freq: ', freq[i], 'sent: ', calcSent[i]);
     }
 
-    // for(i = 0; i < freq.length; i++){
-    //     console.log('freq', freq[i]);
-    // }
+    ////////////////////
+    //DATE FORMATTING//
+    //////////////////
 
     function tsConvert(unix){
       var input = new Date(unix * 1000);
-      // var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+      var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
       var year = input.getFullYear();
-      // var month = months[input.getMonth()];
-      var month = input.getMonth();
+      var month = months[input.getMonth()];
       var date = input.getDate();
       var hour = input.getHours();
       var min = input.getMinutes();
@@ -140,22 +133,24 @@ class ChartContainer extends Component {
       if(sec < 10){
         sec = '0' + sec;
       }
-      var time = month + '/' + date + '/' + year + ', ' + hour + ':' + min + ':' + sec ;
-      // var time = month + ' ' + date + ', ' + year + ' ' + hour + ':' + min + ':' + sec ;
+
+      var time = month + ' ' + date + ', ' + year + ' ' + hour + ':' + min + ':' + sec ;
       return time;
     }
 
     var convertedRange = [];
     convertedRange.length = ranges.length;
+
     for(i = 0; i < ranges.length; i++){
       convertedRange[i] = tsConvert(ranges[i]);
-      console.log('what you is', convertedRange[i]);
     }
 
-    //SENTIMENT COLOR ASSIGNMENT
+    ///////////////////////////////
+    //SENTIMENT COLOR ASSIGNMENT//
+    /////////////////////////////
 
     var colors = [];
-    colors.length = tbd.length;
+    colors.length = calcSent.length;
 
     function sentColor(sent){
       if(sent <= -0.8){
@@ -190,8 +185,8 @@ class ChartContainer extends Component {
       }
     }
 
-    for(i = 0; i < tbd.length; i++){
-      colors[i] = sentColor(tbd[i]);
+    for(i = 0; i < calcSent.length; i++){
+      colors[i] = sentColor(calcSent[i]);
     }
 
     this.setState({
