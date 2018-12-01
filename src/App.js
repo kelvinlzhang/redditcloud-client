@@ -4,6 +4,7 @@ import sketch from './sketch';
 import p5 from 'p5';
 import './App.css';
 import "react-datepicker/dist/react-datepicker.css";
+import ChartContainer from './ChartContainer';
 
 const axios = require('axios');
 
@@ -58,7 +59,7 @@ class App extends Component {
     this.setState({ startDate: date });
     console.log((this.state.startDate.getTime() / 1000).toFixed(0));
   }
-  
+
   onChangeEndDate= (date) => {
     this.setState({ endDate: date });
     console.log((this.state.startDate.getTime() / 1000).toFixed(0));
@@ -72,8 +73,13 @@ class App extends Component {
       start: parseInt((this.state.startDate.getTime() / 1000).toFixed(0)),
       end: parseInt((this.state.endDate.getTime() / 1000).toFixed(0))
     })
+<<<<<<< HEAD
     
     axios.post('http://18.223.169.36:80', data, {
+=======
+
+    axios.post('http://127.0.0.1:8080', data, {
+>>>>>>> 15fd88ffe3e9127691f30421a73a43005b5aaeb0
       headers: {
         'Content-Type': 'application/json;charset=UTF-8',
         "Access-Control-Allow-Origin": "*",
@@ -113,6 +119,7 @@ class App extends Component {
           <button>Submit</button>
         </form>
         <P5Wrapper sketch={sketch}/>
+        <ChartContainer />
       </div>
     );
   }
