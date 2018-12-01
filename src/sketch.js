@@ -324,7 +324,7 @@ const sketch = (props) => (p) => {
     }
   }
   
-  function setup() {
+  p.setup = () => {
     p.createCanvas(720, 400);
     p.textSize(fontSize);
     p.textAlign(p.LEFT, p.TOP);
@@ -342,7 +342,7 @@ const sketch = (props) => (p) => {
   }
   
   
-  function draw() {
+  p.draw = () => {
     if (debug) {
       p.noFill();
       p.stroke(255, 128, 0);
@@ -357,7 +357,7 @@ const sketch = (props) => (p) => {
     cloud.render();
   }
   
-  function windowResized() {
+  p.windowResized = () => {
     var width = document.getElementById('canvasContainer').offsetWidth;
     var height = document.getElementById('canvasContainer').offsetHeight;
     p.resizeCanvas(width, height);
@@ -373,11 +373,11 @@ const sketch = (props) => (p) => {
     }
   }
   
-  function mousePressed() {
+  p.mousePressed = () => {
     ih.mousePressed();
   }
   
-  function mouseReleased() {
+  p.mouseReleased = () => {
     ih.mouseReleased();
   }
 }
