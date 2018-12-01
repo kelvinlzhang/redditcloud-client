@@ -1,15 +1,15 @@
 {
-  "main.css": "/reddit-cloud/static/css/main.c17d274d.chunk.css",
-  "main.js": "/reddit-cloud/static/js/main.6ba0ee93.chunk.js",
-  "main.js.map": "/reddit-cloud/static/js/main.6ba0ee93.chunk.js.map",
-  "static/css/1.3100580a.chunk.css": "/reddit-cloud/static/css/1.3100580a.chunk.css",
-  "static/js/1.070c1cbe.chunk.js": "/reddit-cloud/static/js/1.070c1cbe.chunk.js",
-  "static/js/1.070c1cbe.chunk.js.map": "/reddit-cloud/static/js/1.070c1cbe.chunk.js.map",
-  "runtime~main.js": "/reddit-cloud/static/js/runtime~main.acfb91ec.js",
-  "runtime~main.js.map": "/reddit-cloud/static/js/runtime~main.acfb91ec.js.map",
-  "static/css/1.3100580a.chunk.css.map": "/reddit-cloud/static/css/1.3100580a.chunk.css.map",
-  "static/css/main.c17d274d.chunk.css.map": "/reddit-cloud/static/css/main.c17d274d.chunk.css.map",
-  "index.html": "/reddit-cloud/index.html",
-  "precache-manifest.1c4df052d51f09b132b0ced70a08d4bd.js": "/reddit-cloud/precache-manifest.1c4df052d51f09b132b0ced70a08d4bd.js",
-  "service-worker.js": "/reddit-cloud/service-worker.js"
+  "main.css": "/redditcloud-client/static/css/main.c17d274d.chunk.css",
+  "main.js": "/redditcloud-client/static/js/main.6ba0ee93.chunk.js",
+  "main.js.map": "/redditcloud-client/static/js/main.6ba0ee93.chunk.js.map",
+  "static/css/1.3100580a.chunk.css": "/redditcloud-client/static/css/1.3100580a.chunk.css",
+  "static/js/1.070c1cbe.chunk.js": "/redditcloud-client/static/js/1.070c1cbe.chunk.js",
+  "static/js/1.070c1cbe.chunk.js.map": "/redditcloud-client/static/js/1.070c1cbe.chunk.js.map",
+  "runtime~main.js": "/redditcloud-client/static/js/runtime~main.de328c80.js",
+  "runtime~main.js.map": "/redditcloud-client/static/js/runtime~main.de328c80.js.map",
+  "static/css/main.c17d274d.chunk.css.map": "/redditcloud-client/static/css/main.c17d274d.chunk.css.map",
+  "static/css/1.3100580a.chunk.css.map": "/redditcloud-client/static/css/1.3100580a.chunk.css.map",
+  "index.html": "/redditcloud-client/index.html",
+  "precache-manifest.25d0d00d78c506147489237b5020e91b.js": "/redditcloud-client/precache-manifest.25d0d00d78c506147489237b5020e91b.js",
+  "service-worker.js": "/redditcloud-client/service-worker.js"
 }
