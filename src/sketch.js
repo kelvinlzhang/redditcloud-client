@@ -292,17 +292,20 @@ const sketch = (props) => (p) => {
     }
   
     mouseReleased() {
-      this.attachedBox = null;
-      this.isPressed = false;
       if (this.clickX - p.mouseX < this.clickThreshold && this.clickX - p.mouseX > -this.clickThreshold &&
           this.clickY - p.mouseY < this.clickThreshold && this.clickY - p.mouseY > -this.clickThreshold) {
         this.mouseClicked();
       }
+      this.attachedBox = null;
+      this.isPressed = false;
     }
   
     mouseClicked() {
       console.log("click");
-      this.updateSentimentChart();
+      if (this.attachedBox != null) {
+        console.log(this.attachedBox.text);
+        this.updateSentimentChart();
+      }
     }
   
     handleAttachedBox() {
@@ -357,11 +360,11 @@ const sketch = (props) => (p) => {
     cloud.render();
   }
   
-  p.windowResized = () => {
-    var width = document.getElementById('canvasContainer').offsetWidth;
-    var height = document.getElementById('canvasContainer').offsetHeight;
-    p.resizeCanvas(width, height);
-  }
+  // p.windowResized = () => {
+  //   var width = document.getElementById('canvasContainer').offsetWidth;
+  //   var height = document.getElementById('canvasContainer').offsetHeight;
+  //   p.resizeCanvas(width, height);
+  // }
   
   function clampAbs(val, max) {
     var sign = (val < 0) ? -1 : 1;

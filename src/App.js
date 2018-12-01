@@ -76,6 +76,10 @@ class App extends Component {
     })
 
     axios.post('http://127.0.0.1:8080', data, {
+<<<<<<< HEAD
+=======
+
+>>>>>>> 63a8dc5dd0d2e03b3392f044a7bd066685656b9c
       headers: {
         'Content-Type': 'application/json;charset=UTF-8',
         "Access-Control-Allow-Origin": "*",
