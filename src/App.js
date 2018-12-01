@@ -43,7 +43,8 @@ class App extends Component {
       subreddit: "",
       startDate: new Date(),
       endDate: new Date(),
-      words: {}
+      frequencies: [],
+      sentiments: []
     };
 
     this.onChangeSubreddit = this.onChangeSubreddit.bind(this);
@@ -73,26 +74,23 @@ class App extends Component {
       start: parseInt((this.state.startDate.getTime() / 1000).toFixed(0)),
       end: parseInt((this.state.endDate.getTime() / 1000).toFixed(0))
     })
-<<<<<<< HEAD
-    
-    axios.post('http://18.223.169.36:80', data, {
-=======
 
     axios.post('http://127.0.0.1:8080', data, {
->>>>>>> 15fd88ffe3e9127691f30421a73a43005b5aaeb0
       headers: {
         'Content-Type': 'application/json;charset=UTF-8',
         "Access-Control-Allow-Origin": "*",
       },
       timeout: 60000
     })
-    .then((res) => console.log(res));
-    // .then((data) => {
-    //   this.setState({
-    //     words: data
-    //   });
-    //   console.log(data)
-    // });
+    .then((res) => res.data)
+    .then((data) => {
+      var sentiments = data.map(a => ((({word, timestamps, score, vote}) => ({word, timestamps, score, vote}))(a)));
+      var frequencies = data.map(a => ((({word, frequency}) => ({word, frequency}))(a)));
+      this.setState({
+        sentiments: sentiments,
+        frequencies: frequencies
+      });
+    });
   }
 
   render() {
@@ -119,6 +117,7 @@ class App extends Component {
           <button>Submit</button>
         </form>
         <P5Wrapper sketch={sketch}/>
+        <input id="canvasForm" value=""></input>
         <ChartContainer />
       </div>
     );
