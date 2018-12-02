@@ -31,9 +31,8 @@ const sketch = (props) => (p) => {
       minFontSize = 12;
   
   var spawnBoxSize = 50;
-  
-  var spring = 0.5;
-  var force = 80000;
+
+  var maxWords = 40;
     
   var x,y, cloud;
   
@@ -84,9 +83,24 @@ const sketch = (props) => (p) => {
           maxFreq = freq;
         }
       }
-      for (const [word, freq] of Object.entries(wordDict)) {
-        this.wordBoxes.push(new wordBox(word, freq, maxFreq, 
-          this.getProceduralColor(baseColor, colorMinOffset, colorMaxOffset)));
+      var sortable = Object.entries(wordDict);
+      sortable.sort(function(a, b) {
+        return b[1] - a[1];
+      });
+      var minFreq;
+      if (maxWords > sortable.length) {
+        minFreq = 1;
+      } else {
+        minFreq = sortable[maxWords][1];
+      }
+      console.log(sortable);
+      sortable = sortable.slice(0, maxWords);
+      var count = 0;
+      for (const [word, freq] of sortable) {
+        var isBiggest = count == 0 ? true : false;
+        count++;
+        this.wordBoxes.push(new wordBox(word, freq, maxFreq, minFreq, 
+          this.getProceduralColor(baseColor, colorMinOffset, colorMaxOffset), isBiggest));
       }
     }
   
@@ -135,18 +149,21 @@ const sketch = (props) => (p) => {
   }
   
   class wordBox {
-    constructor(text, freq, maxFreq, color) {
+    constructor(text, freq, maxFreq, minFreq, color, isBiggest) {
       this.text = text;
+      this.isBiggest = isBiggest;
       this.freq = freq;
       this.maxFreq = maxFreq;
-      this.fontSize = p.map(freq/maxFreq, 0, 1, minFontSize, fontSize);
+      this.minFreq = minFreq;
+      this.fontSize = p.map((freq - minFreq)/(maxFreq - minFreq), 0, 1, minFontSize, fontSize);
       p.textSize(this.fontSize);
-      var randX = Math.random() * 30 - 15;
-      var randY = Math.random() * 30 - 15;
+      var randX = Math.random() * spawnBoxSize - spawnBoxSize / 2;
+      var randY = Math.random() * spawnBoxSize - spawnBoxSize / 2;
       this.rect = new Rectangle(p.width / 2 - p.textWidth(text) / 2 + randX, 
                     p.height / 2 + randY, 
                     p.textWidth(text), 
-                    this.fontSize * scalar);
+                    this.fontSize * scalar,
+                    isBiggest);
       this.yOffset = this.fontSize * (1 - scalar);
       this.color = color;
     }
@@ -174,7 +191,7 @@ const sketch = (props) => (p) => {
   }
   
   class Rectangle {
-    constructor(x,y,w,h) {
+    constructor(x,y,w,h,isBiggest) {
       this.x = x;
       this.y = y;
       this.w = w;
@@ -183,6 +200,7 @@ const sketch = (props) => (p) => {
       this.midY = y + h / 2;
       this.vx = 0;
       this.vy = 0;
+      this.isBiggest = isBiggest
     }
   
     area() {
@@ -197,6 +215,12 @@ const sketch = (props) => (p) => {
       if (!this.collides(other)) {
         return
       }
+
+      var spring = 0.5;
+      var force = 800000;
+      var sizeScale = 0.3;
+      var biggestScale = this.isBiggest == true ? 1/50000 : 1;
+
       var dx = this.midX - other.midX,
           dy = this.midY - other.midY;
       var threshold = 1.0;
@@ -216,12 +240,12 @@ const sketch = (props) => (p) => {
       var constvx = force * spring / dx, // Math.abs(dx),
         constvy = force * spring / dy; // Math.abs(dy);
   
-      var areaScale1 = p.pow(this.area(), 0.3);
-      var areaScale2 = p.pow(other.area(), 0.3);
+      var areaScale1 = p.pow(this.area(), sizeScale);
+      var areaScale2 = p.pow(other.area(), sizeScale);
   
       var max = 1;
-      this.vx += clampAbs(constvx / areaScale1, max);
-      this.vy += clampAbs(constvy / areaScale1, max);
+      this.vx += clampAbs(constvx / areaScale1 * biggestScale, max);
+      this.vy += clampAbs(constvy / areaScale1 * biggestScale, max);
       other.vx -= clampAbs(constvx / areaScale2, max);
       other.vy -= clampAbs(constvy / areaScale2, max);
     }
@@ -301,6 +325,7 @@ const sketch = (props) => (p) => {
     mouseClicked() {
       if (this.attachedBox != null) {
         console.log(this.attachedBox.text);
+        console.log(this.attachedBox.isBiggest);
         this.updateSentimentChart();
       }
     }
