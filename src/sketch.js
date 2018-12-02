@@ -1,12 +1,7 @@
-/*
-	TODO:
-		1. add inwards force
-		2. add color
-		3. add ability to click/drag words
-		4. clean up/refactor
-		5. figure out communication with sentiment charts
-*/
-
+/**
+ * Main sketch function. Sketches the entire word cloud.
+ * @param {Object} props - Object containing frequency dictionary
+ */ 
 const sketch = (props) => (p) => { 
   var colorBaseOptions = [];
   
@@ -30,6 +25,13 @@ const sketch = (props) => (p) => {
   var ih;
   
   class wordCloud {
+    /**
+     * Creates an instance of the wordCloud.
+     * - Defines boundaries for the canvas.
+     * - Sorts words by frequencies
+     * - Creates wordBoxes based on frequency and randomly assigns colors 
+     * @param {Object} wordDict - Object containing frequency dictionary
+     */
     constructor(wordDict) {
     
       this.wordDict = wordDict;
@@ -89,7 +91,12 @@ const sketch = (props) => (p) => {
           this.getProceduralColor(baseColor, colorMinOffset, colorMaxOffset), isBiggest));
       }
     }
-  
+
+    /**
+     * Main render function.
+     * - Renders individual word boxes
+     * - Renders individual boundaries
+     */
     render() {
       for (var i = 0; i < this.wordBoxes.length; i++) {
         this.wordBoxes[i].render();
@@ -101,6 +108,10 @@ const sketch = (props) => (p) => {
       }
     }
   
+    /**
+     * Handles collisions between wordBoxes by calling
+     * handleCollision() and move() on each wordBox
+     */
     handleCollisions() {
       for (var i = 0; i < this.wordBoxes.length; i++) {
         for (var j = i; j < this.wordBoxes.length; j++) {
@@ -113,6 +124,10 @@ const sketch = (props) => (p) => {
       }
     }
   
+    /**
+     * Handles boundaries between boundaries by calling
+     * handleBoundary on individual boundaries.
+     */
     handleBoundary() {
       for (var i = 0; i < this.wordBoxes.length; i++) {
         for (var j = 0; j < this.boundaries.length; j++) {
@@ -120,13 +135,28 @@ const sketch = (props) => (p) => {
         }
       }
     }
-  
+
+    /**
+     * Gets procedural color based on an initial value, min, and max
+     * @param {Color Base} colorBase - Color base value
+     * @param {Integer} min - Minimum offset from base value
+     * @param {Integer} max - Maximum offset from base value
+     * @return {P5 Color} - Color for wordBox
+     */ 
     getProceduralColor(colorBase, min, max) {
       return p.color(this.procColorHelper(p.red(colorBase), min, max),
                    this.procColorHelper(p.green(colorBase), min, max),
                    this.procColorHelper(p.blue(colorBase), min, max))
     }
   
+    /**
+     * Helper function to randomly create a procedural color
+     * @param {Integer} val - Color base value
+     * @param {Integer} min - Minimum offset from base value
+     * @param {Integer} max - Maximum offset from base value
+     * @return {Integer} temp - Red, green, or blue integer value to be fed
+     * into P5.
+     */
     procColorHelper(val, min, max) {
       var temp = val + (Math.random() * ((max*2) - (min*2))) - max;
       temp = Math.floor(temp <= 0 ? temp - min : temp + min);
@@ -135,6 +165,17 @@ const sketch = (props) => (p) => {
   }
   
   class wordBox {
+    /**
+     * Creates an instance of a word box.
+     * - Passes all input parameters and binds to object
+     * - Creates instance of rectangle to contain the word
+     * @param {String} text - text to render
+     * @param {Integer} freq - frequency of the word
+     * @param {Integer} maxFreq - maximum of all frequencies in word dictionary
+     * @param {Integer} minFreq - minimum of all frequencies in word dictionary
+     * @param {P5 Color} color - color of the text
+     * @param {Boolean} isBiggest - boolean of whether the word is the biggest among all those in word dictionary
+     */
     constructor(text, freq, maxFreq, minFreq, color, isBiggest) {
       this.text = text;
       this.isBiggest = isBiggest;
@@ -154,6 +195,11 @@ const sketch = (props) => (p) => {
       this.color = color;
     }
   
+    /**
+     * Main render function for wordBox class.
+     * - Sets text size, fill, and actual text
+     * - If in debug mode, render the rectangle as well
+     */
     render() {
       p.textSize(this.fontSize);
       p.fill(this.color);
@@ -163,20 +209,39 @@ const sketch = (props) => (p) => {
       }
     }
     
+    /**
+     * Handles a collision for this wordBox.
+     * @param {wordBox} other - other wordBox that is colliding with this one
+     */
     handleCollision(other) {
       this.rect.handleCollision(other.rect);
     }
   
+    /**
+     * Moves a wordBox by moving its rectangle
+     */
     move() {
       this.rect.move();
     }
   
+    /**
+     * Handle a wordBox collision with a boundary
+     * @param {Boundary} bound - boundary that is colliding with wordBox
+     */
     handleBoundary(bound) {
       this.rect.handleCollision(bound);
     }
   }
   
   class Rectangle {
+    /**
+     * Creates an instance of a Rectangle to contain wordBox
+     * @param {Integer} x - Left x offset
+     * @param {Integer} y - Top y offset
+     * @param {Integer} w - Width of rectangle
+     * @param {Integer} h - Height of rectangle
+     * @param {Boolean} isBiggest - Whether or not this rectangle is biggest of all
+     */
     constructor(x,y,w,h,isBiggest) {
       this.x = x;
       this.y = y;
@@ -189,14 +254,27 @@ const sketch = (props) => (p) => {
       this.isBiggest = isBiggest
     }
   
+    /**
+     * Helper function to calculate area of rectangle
+     */
     area() {
       return this.w * this.h;
     }
   
+    /**
+     * Main render function to render a Rectangle instance
+     */
     render() {
       p.rect(this.x, this.y, this.w, this.h);
     }
   
+    /**
+     * Handles a collision with another rectangle
+     * - Collision algorithm is based on spring force
+     * - Sets delta x and delta y (how much to move)
+     * - Sets velocities of this and other rectangle
+     * @param {Recangle} other - other rectangle this rectangle is colliding with
+     */
     handleCollision(other) {
       if (!this.collides(other)) {
         return
@@ -236,6 +314,10 @@ const sketch = (props) => (p) => {
       other.vy -= clampAbs(constvy / areaScale2, max);
     }
   
+    /**
+     * Adds an arbitrary inward force for aesthetic reasons (word cloud attraction toward center)
+     * - Adjusts velocity towards center based on constant force strength
+     */
     addInwardsForce() {
       var forceStrength = 0.0001;
       var centerX = p.width / 2;
@@ -246,6 +328,11 @@ const sketch = (props) => (p) => {
       this.vy += fY * forceStrength;
     }
   
+    /**
+     * Main function to move a rectangle when a user drags the rectangle.
+     * - Resets position (x, y, midX, midY) based on velocities
+     * - Resets velocities based on drag
+     */
     move() {
       // this.addInwardsForce();
       var drag = 0.4;
@@ -257,6 +344,11 @@ const sketch = (props) => (p) => {
       this.vy = this.vx * drag;
     }
   
+    /**
+     * Helper function to check if other rectangle collides with this one
+     * @param {Recangle} other - other rectangle to check agains
+     * @return {Boolean} - whether or not other rectangle collides with this one
+     */
     collides(other) {
       if (this.x < other.x + other.w && this.x + this.w > other.x &&
             this.y < other.y + other.h && this.y + this.h > other.y) {
@@ -264,7 +356,13 @@ const sketch = (props) => (p) => {
       }
       return false;
     }
-  
+
+    /**
+     * Helper function to check if input x and y is in rectangle
+     * @param {Integer} x - x value to check in rectangle
+     * @param {Integer} y - y value to check in rectangle
+     * @return {Boolean} - whether or not x, y pair in rectangle
+     */
     contains(x, y) {
       if (x > this.x && x < this.x + this.w &&
           y > this.y && y < this.y + this.h) {
@@ -275,6 +373,10 @@ const sketch = (props) => (p) => {
   }
   
   class InputHandler {
+    /**
+     * Creates an instance of InputHandler by initializing state/
+     * @param {Array<wordBox>} wordBoxes - array of word boxes user can click on
+     */
     constructor(wordBoxes) {
       this.wordBoxes = wordBoxes;
       this.attachedBox = null;
@@ -286,6 +388,11 @@ const sketch = (props) => (p) => {
       this.clickThreshold = 2;
     }
   
+    /**
+     * Handles a mouse press event
+     * - Finds wordBox user may have clicked on
+     * - Resets x and y if the click event is within the box
+     */
     mousePressed() {
       for (var i = 0; i < this.wordBoxes.length; i++) {
         if (this.wordBoxes[i].rect.contains(p.mouseX, p.mouseY)) {
@@ -299,6 +406,10 @@ const sketch = (props) => (p) => {
       this.clickY = p.mouseY;
     }
   
+    /**
+     * Handles a mouse release event
+     * - Calls mouseClicked() if the click event is within the threshold
+     */
     mouseReleased() {
       if (this.clickX - p.mouseX < this.clickThreshold && this.clickX - p.mouseX > -this.clickThreshold &&
           this.clickY - p.mouseY < this.clickThreshold && this.clickY - p.mouseY > -this.clickThreshold) {
@@ -308,6 +419,10 @@ const sketch = (props) => (p) => {
       this.isPressed = false;
     }
   
+    /**
+     * Handles a mouse click event
+     * - Update the sentiment chart based on the text the user clicked on
+     */
     mouseClicked() {
       if (this.attachedBox != null) {
         console.log(this.attachedBox.text);
@@ -315,6 +430,10 @@ const sketch = (props) => (p) => {
       }
     }
   
+    /**
+     * Handles the attached box. This function is called in main render() function
+     * - Adjust the attached box based on x and y offsets
+     */
     handleAttachedBox() {
       if (this.attachedBox == null) {
         return;
@@ -323,6 +442,12 @@ const sketch = (props) => (p) => {
       this.attachedBox.rect.y = p.mouseY - this.yOffset;
     }
   
+    /**
+     * Updates the sentiment chart by dispatching an event to parent App.
+     * - Extract relevant text
+     * - Creates a new event object
+     * - Dispatches event object with relevant text set as value
+     */
     updateSentimentChart() {
       var val;
       if (this.attachedBox == null) {
@@ -340,6 +465,12 @@ const sketch = (props) => (p) => {
     }
   }
   
+  /**
+   * Sets up canvas.
+   * - Initializes canvas size, text size, text alignment, options for a color base
+   * - Creates instance of wordCloud class using word frequency dictionary
+   * - Creates instance of InputHandler class using wordBoxes
+   */
   p.setup = () => {
     p.createCanvas(720, 400);
     p.textSize(fontSize);
@@ -358,6 +489,13 @@ const sketch = (props) => (p) => {
   }
   
   
+  /*
+   * Main draw function.
+   * - Sets background for canvas
+   * - Calls handleBoundary() and handleCollisions() on cloud instance
+   * - Calls handleAttachedBox() on InputHandler instance
+   * - Renders the cloud
+   */
   p.draw = () => {
     if (debug) {
       p.noFill();
@@ -373,12 +511,11 @@ const sketch = (props) => (p) => {
     cloud.render();
   }
   
-  // p.windowResized = () => {
-  //   var width = document.getElementById('canvasContainer').offsetWidth;
-  //   var height = document.getElementById('canvasContainer').offsetHeight;
-  //   p.resizeCanvas(width, height);
-  // }
-  
+  /**
+   * Helper function to clamp value below a maximum value
+   * @param {Integer} val - value to clamp
+   * @param {Integer} max - maximum value val can be
+   */ 
   function clampAbs(val, max) {
     var sign = (val < 0) ? -1 : 1;
     var temp = (val < 0) ? -val : val;
@@ -389,10 +526,16 @@ const sketch = (props) => (p) => {
     }
   }
   
+  /**
+   * Handle mouse press by calling mousePressed() on the instance of InputHandler
+   */
   p.mousePressed = () => {
     ih.mousePressed();
   }
   
+  /**
+   * Handle mouse release by calling mouseReleased() on the instance of InputHandler
+   */
   p.mouseReleased = () => {
     ih.mouseReleased();
   }

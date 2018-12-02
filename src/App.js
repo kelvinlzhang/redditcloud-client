@@ -83,6 +83,8 @@ class App extends Component {
   onSubmit = (e) => {
     e.preventDefault();
 
+    // Data consists of a subreddit of type String, start and end dates of type Integer
+    // (in Unix Timestamp format)
     let data = JSON.stringify({
       subreddit: this.state.subreddit,
       start: parseInt((this.state.startDate.getTime() / 1000).toFixed(0)),
@@ -98,6 +100,7 @@ class App extends Component {
     })
     .then((res) => res.data)
     .then((data) => {
+      // Extract data
       var sentiments = Object.assign({}, ...data.map(({word, timestamps, score, vote}) => ({[word]: {timestamps, score, vote}})));
       var frequencies = data.reduce((map, obj) => (map[obj.word] = obj.frequency, map), {});
 
@@ -108,6 +111,12 @@ class App extends Component {
     });
   }
 
+  /**
+   * Main render function.
+   * - Contains P5Wrapper for WordCloud
+   * - Contains ChartContainer for SentimentChart
+   * - Handles form submission consisting of a subreddit name, start, and end dates
+   */
   render() {
     return (
       <div className="App">
