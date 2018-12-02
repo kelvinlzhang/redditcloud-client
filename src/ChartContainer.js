@@ -13,10 +13,10 @@ class ChartContainer extends Component {
     super();
     this.state = {
       chartData:{},
-      word: data.words[2].word, // this.props .. passed down from WordCloud
-      ts: data.words[2].timestamps,
-      vote: data.words[2].vote,
-      s: data.words[2].score,
+      word: data.words[1].word, // this.props .. passed down from WordCloud
+      ts: data.words[1].timestamps,
+      vote: data.words[1].vote,
+      s: data.words[1].score,
     }
   }
   componentWillMount(){
@@ -134,7 +134,7 @@ class ChartContainer extends Component {
         sec = '0' + sec;
       }
 
-      var time = month + ' ' + date + ', ' + year + ' ' + hour + ':' + min + ':' + sec ;
+      var time = month + ' ' + date + ', ' + year + ' ' + hour + ':' + min;
       return time;
     }
 
