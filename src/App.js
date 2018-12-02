@@ -1,40 +1,13 @@
 import React, { Component } from 'react';
 import DatePicker from "react-datepicker";
 import sketch from './sketch';
-import p5 from 'p5';
+import ChartContainer from './ChartContainer';
+import P5Wrapper from './P5Wrapper';
+
 import './App.css';
 import "react-datepicker/dist/react-datepicker.css";
-import ChartContainer from './ChartContainer';
 
 const axios = require('axios');
-
-class P5Wrapper extends React.Component {
-  componentDidMount() {
-    const { sketch, ...rest } = this.props;
-    this.canvas = new p5(sketch(rest), this.wrapper);
-  }
-
-  componentWillReceiveProps(newProps) {
-    const { sketch, ...rest } = newProps;
-    console.log(newProps)
-    if (this.props.dict !== newProps.dict) {
-      this.canvas.remove();
-      this.canvas = new p5(newProps.sketch(rest), this.wrapper);
-    }
-
-    if (typeof this.canvas.onNewProps === "function") {
-      this.canvas.onNewProps(newProps);
-    }
-  }
-
-  componentWillUnmount() {
-    this.canvas.remove();
-  }
-
-  render() {
-    return <div ref={(wrapper) => this.wrapper = wrapper} />;
-  }
-}
 
 class App extends Component {
   constructor(props) {
@@ -44,7 +17,16 @@ class App extends Component {
       startDate: new Date(),
       endDate: new Date(),
       word: "",
-      frequencies: {},
+      frequencies: {
+        "RedditCloud": 25,
+        "CS130": 15,
+        "Kelvin Zhang": 5,
+        "Karen Zhang": 5,
+        "Vishaal Agartha": 5,
+        "CJ Ordog": 5,
+        "Anav Sanghvi": 5,
+        "Albert Pan": 5
+      },
       sentiments: {}
     };
 
@@ -67,7 +49,6 @@ class App extends Component {
   }
 
   onChangeSentimentChart = (e) => {
-    console.log(e);
     this.setState({ word: e.target.value });
   }
 
@@ -102,6 +83,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
+        <P5Wrapper sketch={sketch} dict={this.state.frequencies}/>
         <form onSubmit={this.onSubmit}>
           <input value={this.state.subreddit} onChange={this.onChangeSubreddit} />
           <DatePicker
@@ -122,8 +104,7 @@ class App extends Component {
           />
           <button>Submit</button>
         </form>
-        <P5Wrapper sketch={sketch} dict={this.state.frequencies}/>
-        <input id="canvasForm" value="" onChange={this.onChangeSentimentChart}/>
+        <input style={{display:"none"}} id="canvasForm" value="" onChange={this.onChangeSentimentChart}/>
         {typeof(this.state.sentiments[this.state.word]) !== "undefined" &&
           <ChartContainer 
             word={this.state.word} 

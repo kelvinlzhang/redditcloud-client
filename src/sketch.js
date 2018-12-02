@@ -7,20 +7,7 @@
 		5. figure out communication with sentiment charts
 */
 
-const sketch = (props) => (p) => {
-  var dict = {
-    Lorem:1,
-    ipsum:2,
-    dolor:3,
-    sit:4,
-    amet:5,
-    consectetur:6,
-    adipiscing:7,
-    elit:8, 
-    sed:9,
-    do:10,
-  }
-  
+const sketch = (props) => (p) => { 
   var colorBaseOptions = [];
   
   var scalar = 0.82; // Different for each font
@@ -347,8 +334,9 @@ const sketch = (props) => (p) => {
       var input = document.getElementById("canvasForm");
       var nativeInputValueSetter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, "value").set;
       nativeInputValueSetter.call(input, val);
-      var ev2 = new Event('input', { bubbles: true});
-      input.dispatchEvent(ev2);
+      var ev = new Event('input', { bubbles: true});
+      console.log(ev);
+      input.dispatchEvent(ev);
     }
   }
   
