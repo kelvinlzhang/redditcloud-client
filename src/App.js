@@ -10,6 +10,12 @@ import "react-datepicker/dist/react-datepicker.css";
 const axios = require('axios');
 
 class App extends Component {
+  /**
+   * Creates an instance of redditcloud application by initializing the state.
+   * All elements of the state are empty, except the word cloud initially has a title
+   * consisting of the application name, class, and creators of the application.
+   * @constructor
+   */
   constructor(props) {
     super(props);
     this.state = {
@@ -36,22 +42,44 @@ class App extends Component {
     this.onChangeSentimentChart = this.onChangeSentimentChart.bind(this);
   }
 
+  /**
+   * Changes state to new subreddit
+   * @param {Event} e - Contains the event with new subreddit name
+   */
   onChangeSubreddit = (e) => {
     this.setState({ subreddit: e.target.value });
   }
 
+  /**
+   * Changes state to new start date
+   * @param {Date} date - Contains the date with new start date
+   */
   onChangeStartDate = (date) => {
     this.setState({ startDate: date });
   }
 
+  /**
+   * Changes state to new end date
+   * @param {Date} date - Contains the date with new end date
+   */
   onChangeEndDate = (date) => {
     this.setState({ endDate: date });
   }
 
+  /**
+   * Changes state to new word to be passed down to SentimentChart
+   * @param {Event} e - Contains the event with new word to analyze
+   */
   onChangeSentimentChart = (e) => {
     this.setState({ word: e.target.value });
   }
 
+  /**
+   * Handles submission of form. Formats data and triggers an HTTP request
+   * to backend to obtain data for a certain word. Extracts sentiments and frequencies
+   * and assigns it to the state
+   * @param {Event} - Contains the on click event
+   */
   onSubmit = (e) => {
     e.preventDefault();
 
