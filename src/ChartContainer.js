@@ -3,6 +3,10 @@ import './App.css';
 import data from "./chartComponents/data.json";
 import {Bar} from 'react-chartjs-2';
 
+/**
+ * ChartContainer - Component responsible for generating the sentiment analysis bar graph associated with each word on the word cloud.
+ * Gets props passed down from App Component: word, ts, vote, s.
+ */
 class ChartContainer extends Component {
   constructor(props){
     super();
@@ -15,9 +19,11 @@ class ChartContainer extends Component {
     word:'none'
   }
 
-  //////////////////////
-  //RANGE CALCULATION//
-  ////////////////////
+  /**
+   * RANGE CALCULATION: takes timeframe given by user's query and divides into 10 equal time ranges.
+   * @param {List} time - all the timestamps for when a word was commented
+   * @return {List} ranges - timestamp ranges evenly divided into 10 ranges.
+   */
 
   getRanges(time){
     var i;
@@ -42,9 +48,15 @@ class ChartContainer extends Component {
     return ranges;
   }
 
-  ///////////////////////////////////////
-  //FREQUENCY AND SENTIMENT CALCULATION//
-  //////////////////////////////////////
+  /**
+   * FREQUENCY AND SENTIMENT CALCULATION: iterates through all the timestamps associated with the word, and calculates two things--
+   * (1) number of time it appears within each time range; (2) average sentiment value for the word within each time range
+   * @param {List} time - all the timestamps for when a word was commented
+   * @param {List} votes - the number of up or downvotes the comment with the word at the time
+   * @param {List} sentiments - the sentiment value (ranging from -1 to 1) generated for the comment with the word
+   * @return {List} ans - an array holding two arrays-- (1) results for frequency; (2) results for average sentiments
+   * @this {ChartContainer}
+   */
 
   getFrequencyandSentiment(time, votes, sentiments){
       var i;
@@ -52,6 +64,15 @@ class ChartContainer extends Component {
       var ranges = this.getRanges(time);
       var freq = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
       var calcSent = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]; //hold final calculations for sentiment values to be displayed
+
+
+      /**
+       * helper function sorting out which timestamp falls within which range, and calculates frequency and sentiment values respectively.
+       * @param {List} ranges - all the timestamps for when a word was commented
+       * @param {Number} t - time for when a word was commented
+       * @param {Number} v - the number of up or downvotes the comment with the word
+       * @param {Number} sc - the sentiment value (ranging from -1 to 1) generated for the comment with the word
+       */
 
       function divideSegments(ranges, t, v, sc){
         if(t >= ranges[0] && t < ranges[1]){
@@ -110,14 +131,22 @@ class ChartContainer extends Component {
       return ans;
   }
 
-  ////////////////////
-  //DATE FORMATTING//
-  //////////////////
+  /**
+   * DATE FORMATTING: converts UNIX timestamp into readable date format
+   * @param {List} time - all the timestamps for when a word was commented
+   * @return {List} convertedRange - reformatted time ranges
+   * @this {ChartContainer}
+   */
 
   getDate(time){
     var i;
-
     var ranges = this.getRanges(time);
+
+    /**
+     * helper function to breakdown and reformat UNIX timestamp
+     * @param {Number} unix - =timestamp value
+     * @return {String} date - reformatted date
+     */
 
     function tsConvert(unix){
       var input = new Date(unix * 1000);
@@ -133,8 +162,8 @@ class ChartContainer extends Component {
         sec = '0' + sec;
       }
 
-      var time = month + ' ' + date + ', ' + year + ' ' + hour + ':' + min;
-      return time;
+      var date = month + ' ' + date + ', ' + year + ' ' + hour + ':' + min;
+      return date;
     }
 
     var convertedRange = [];
@@ -147,9 +176,11 @@ class ChartContainer extends Component {
     return convertedRange.slice(0,10);
   }
 
-  ///////////////////////////////
-  //SENTIMENT COLOR ASSIGNMENT//
-  /////////////////////////////
+  /**
+   * SENTIMENT COLOR ASSIGNMENT: assigns sentiment value for each time range to a color
+   * @return {List} colors - holds rgba values for each sentiment in a time range
+   * @this {ChartContainer}
+   */
 
   getColors(){
     var i;
@@ -157,6 +188,11 @@ class ChartContainer extends Component {
 
     var colors = [];
     colors.length = calcSent.length;
+
+    /**
+     * helper function to assign colors for each sentiment range
+     * @param {Number} sent - sentiment value
+     */
 
     function sentColor(sent){
       if(sent <= -0.9){
