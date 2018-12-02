@@ -66,8 +66,9 @@ class App extends Component {
     this.setState({ endDate: date });
   }
 
-  onChangeSentimentChart = (word) => {
-    this.setState({ chart: word });
+  onChangeSentimentChart = (e) => {
+    console.log(e);
+    this.setState({ word: e.target.value });
   }
 
   onSubmit = (e) => {
@@ -122,7 +123,7 @@ class App extends Component {
           <button>Submit</button>
         </form>
         <P5Wrapper sketch={sketch} dict={this.state.frequencies}/>
-        <input type="hidden" id="canvasForm" value="" onChange={this.onChangeSentimentChart}></input>
+        <input id="canvasForm" value="" onChange={this.onChangeSentimentChart}/>
         {typeof(this.state.sentiments[this.state.word]) !== "undefined" &&
           <ChartContainer 
             word={this.state.word} 

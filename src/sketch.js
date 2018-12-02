@@ -345,7 +345,12 @@ const sketch = (props) => (p) => {
       } else {
         val = this.attachedBox.text;
       }
-      document.getElementById("canvasForm").value = val;
+
+      var input = document.getElementById("canvasForm");
+      var nativeInputValueSetter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, "value").set;
+      nativeInputValueSetter.call(input, val);
+      var ev2 = new Event('input', { bubbles: true});
+      input.dispatchEvent(ev2);
     }
   }
   
