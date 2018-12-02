@@ -93,7 +93,6 @@ const sketch = (props) => (p) => {
       } else {
         minFreq = sortable[maxWords][1];
       }
-      console.log(sortable);
       sortable = sortable.slice(0, maxWords);
       var count = 0;
       for (const [word, freq] of sortable) {
@@ -325,7 +324,6 @@ const sketch = (props) => (p) => {
     mouseClicked() {
       if (this.attachedBox != null) {
         console.log(this.attachedBox.text);
-        console.log(this.attachedBox.isBiggest);
         this.updateSentimentChart();
       }
     }
