@@ -16,8 +16,8 @@ class P5Wrapper extends React.Component {
 
   componentWillReceiveProps(newProps) {
     const { sketch, ...rest } = newProps;
-
-    if (this.props.sketch !== newProps.sketch) {
+    console.log(newProps)
+    if (this.props.dict !== newProps.dict) {
       this.canvas.remove();
       this.canvas = new p5(newProps.sketch(rest), this.wrapper);
     }
@@ -43,13 +43,15 @@ class App extends Component {
       subreddit: "",
       startDate: new Date(),
       endDate: new Date(),
-      frequencies: [],
-      sentiments: []
+      word: "",
+      frequencies: {},
+      sentiments: {}
     };
 
     this.onChangeSubreddit = this.onChangeSubreddit.bind(this);
     this.onChangeStartDate = this.onChangeStartDate.bind(this);
     this.onChangeEndDate = this.onChangeEndDate.bind(this);
+    this.onChangeSentimentChart = this.onChangeSentimentChart.bind(this);
   }
 
   onChangeSubreddit = (e) => {
@@ -58,12 +60,14 @@ class App extends Component {
 
   onChangeStartDate = (date) => {
     this.setState({ startDate: date });
-    console.log((this.state.startDate.getTime() / 1000).toFixed(0));
   }
 
-  onChangeEndDate= (date) => {
+  onChangeEndDate = (date) => {
     this.setState({ endDate: date });
-    console.log((this.state.startDate.getTime() / 1000).toFixed(0));
+  }
+
+  onChangeSentimentChart = (word) => {
+    this.setState({ chart: word });
   }
 
   onSubmit = (e) => {
@@ -76,10 +80,6 @@ class App extends Component {
     })
 
     axios.post('http://127.0.0.1:8080', data, {
-<<<<<<< HEAD
-=======
-
->>>>>>> 63a8dc5dd0d2e03b3392f044a7bd066685656b9c
       headers: {
         'Content-Type': 'application/json;charset=UTF-8',
         "Access-Control-Allow-Origin": "*",
@@ -88,8 +88,9 @@ class App extends Component {
     })
     .then((res) => res.data)
     .then((data) => {
-      var sentiments = data.map(a => ((({word, timestamps, score, vote}) => ({word, timestamps, score, vote}))(a)));
-      var frequencies = data.map(a => ((({word, frequency}) => ({word, frequency}))(a)));
+      var sentiments = Object.assign({}, ...data.map(({word, timestamps, score, vote}) => ({[word]: {timestamps, score, vote}})));
+      var frequencies = data.reduce((map, obj) => (map[obj.word] = obj.frequency, map), {});
+
       this.setState({
         sentiments: sentiments,
         frequencies: frequencies
@@ -120,9 +121,16 @@ class App extends Component {
           />
           <button>Submit</button>
         </form>
-        <P5Wrapper sketch={sketch}/>
-        <input id="canvasForm" value=""></input>
-        <ChartContainer />
+        <P5Wrapper sketch={sketch} dict={this.state.frequencies}/>
+        <input type="hidden" id="canvasForm" value="" onChange={this.onChangeSentimentChart}></input>
+        {typeof(this.state.sentiments[this.state.word]) !== "undefined" &&
+          <ChartContainer 
+            word={this.state.word} 
+            ts={this.state.sentiments[this.state.word].timestamps} 
+            vote={this.state.sentiments[this.state.word].vote} 
+            s={this.state.sentiments[this.state.word].score}
+          />
+        }
       </div>
     );
   }

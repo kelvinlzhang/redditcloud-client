@@ -1,5 +1,3 @@
-import p5 from 'p5';
-
 /*
 	TODO:
 		1. add inwards force
@@ -301,7 +299,6 @@ const sketch = (props) => (p) => {
     }
   
     mouseClicked() {
-      console.log("click");
       if (this.attachedBox != null) {
         console.log(this.attachedBox.text);
         this.updateSentimentChart();
@@ -339,7 +336,7 @@ const sketch = (props) => (p) => {
       p.color(153, 51, 255),
       p.color(51, 204, 204)
     ];
-    cloud = new wordCloud(dict);
+    cloud = new wordCloud(props.dict);
     //make sure to initialize inputHandler after wordCloud, should refactor this
     ih = new InputHandler(cloud.wordBoxes);
   }
