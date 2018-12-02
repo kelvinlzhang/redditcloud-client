@@ -1,0 +1,16 @@
+[1202/110451.204:ERROR:process_reader_win.cc(123)] NtOpenThread: {Access Denied} A process has requested access to an object, but has not been granted those access rights. (0xc0000022)
+[1202/110451.207:ERROR:exception_snapshot_win.cc(88)] thread ID 1428 not found in process
+[1202/110510.387:ERROR:process_reader_win.cc(123)] NtOpenThread: {Access Denied} A process has requested access to an object, but has not been granted those access rights. (0xc0000022)
+[1202/110510.387:ERROR:exception_snapshot_win.cc(88)] thread ID 30432 not found in process
+[1202/111021.373:ERROR:process_reader_win.cc(123)] NtOpenThread: {Access Denied} A process has requested access to an object, but has not been granted those access rights. (0xc0000022)
+[1202/111021.375:ERROR:exception_snapshot_win.cc(88)] thread ID 1720 not found in process
+[1202/111239.045:ERROR:process_reader_win.cc(123)] NtOpenThread: {Access Denied} A process has requested access to an object, but has not been granted those access rights. (0xc0000022)
+[1202/111239.045:ERROR:exception_snapshot_win.cc(88)] thread ID 15588 not found in process
+[1202/111750.856:ERROR:process_reader_win.cc(123)] NtOpenThread: {Access Denied} A process has requested access to an object, but has not been granted those access rights. (0xc0000022)
+[1202/111750.859:ERROR:exception_snapshot_win.cc(88)] thread ID 31348 not found in process
+[1202/112242.233:ERROR:process_reader_win.cc(123)] NtOpenThread: {Access Denied} A process has requested access to an object, but has not been granted those access rights. (0xc0000022)
+[1202/112242.235:ERROR:exception_snapshot_win.cc(88)] thread ID 44916 not found in process
+[1202/113229.061:ERROR:process_reader_win.cc(123)] NtOpenThread: {Access Denied} A process has requested access to an object, but has not been granted those access rights. (0xc0000022)
+[1202/113229.062:ERROR:exception_snapshot_win.cc(88)] thread ID 45552 not found in process
+[1202/113243.575:ERROR:process_reader_win.cc(123)] NtOpenThread: {Access Denied} A process has requested access to an object, but has not been granted those access rights. (0xc0000022)
+[1202/113243.580:ERROR:exception_snapshot_win.cc(88)] thread ID 14800 not found in process
