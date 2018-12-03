@@ -2,7 +2,7 @@ var webdriver = require('selenium-webdriver');
 var By = webdriver.By;
 
 var driver = new webdriver.Builder().forBrowser('firefox').build();
-driver.get('http://localhost:3000/');
+driver.get('https://kelvinlzhang.github.io/redditcloud-client/');
 
 
 //inputs subreddit into field
