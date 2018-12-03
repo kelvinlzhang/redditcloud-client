@@ -425,7 +425,6 @@ const sketch = (props) => (p) => {
      */
     mouseClicked() {
       if (this.attachedBox != null) {
-        console.log(this.attachedBox.text);
         this.updateSentimentChart();
       }
     }
@@ -460,7 +459,6 @@ const sketch = (props) => (p) => {
       var nativeInputValueSetter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, "value").set;
       nativeInputValueSetter.call(input, val);
       var ev = new Event('input', { bubbles: true});
-      console.log(ev);
       input.dispatchEvent(ev);
     }
   }

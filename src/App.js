@@ -3,6 +3,16 @@ import DatePicker from "react-datepicker";
 import sketch from './sketch';
 import ChartContainer from './ChartContainer';
 import P5Wrapper from './P5Wrapper';
+import { 
+  Button, 
+  Form, 
+  FormGroup, 
+  Input, 
+  InputGroup, 
+  InputGroupAddon, 
+  InputGroupText 
+} from 'reactstrap';
+
 
 import './App.css';
 import "react-datepicker/dist/react-datepicker.css";
@@ -22,6 +32,7 @@ class App extends Component {
       subreddit: "",
       startDate: new Date(),
       endDate: new Date(),
+      dateRange: [new Date(), new Date()],
       word: "",
       frequencies: {
         "RedditCloud": 25,
@@ -78,11 +89,12 @@ class App extends Component {
    * Handles submission of form. Formats data and triggers an HTTP request
    * to backend to obtain data for a certain word. Extracts sentiments and frequencies
    * and assigns it to the state
-   * @param {Event} - Contains the on click event
+   * @param {Event} - Contains the submit event
    */
   onSubmit = (e) => {
     e.preventDefault();
 
+    
     // Data consists of a subreddit of type String, start and end dates of type Integer
     // (in Unix Timestamp format)
     let data = JSON.stringify({
@@ -121,26 +133,38 @@ class App extends Component {
     return (
       <div className="App">
         <P5Wrapper sketch={sketch} dict={this.state.frequencies}/>
-        <form onSubmit={this.onSubmit}>
-          <input value={this.state.subreddit} onChange={this.onChangeSubreddit} />
-          <DatePicker
-            selected={this.state.startDate}
-            onChange={this.onChangeStartDate}
-            showTimeSelect
-            timeFormat="HH:mm"
-            timeIntervals={5}
-            dateFormat="MM/d/yyyy h:mm aa"
-          />
-          <DatePicker
-            selected={this.state.endDate}
-            onChange={this.onChangeEndDate}
-            showTimeSelect
-            timeFormat="HH:mm"
-            timeIntervals={5}
-            dateFormat="MM/d/yyyy h:mm aa"
-          />
-          <button>Submit</button>
-        </form>
+          <Form onSubmit={this.onSubmit}>
+            <InputGroup size="sm">
+              <InputGroupAddon addonType="prepend">
+                <InputGroupText>r/ </InputGroupText>
+              </InputGroupAddon>
+              <Input 
+                value={this.state.subreddit} 
+                onChange={this.onChangeSubreddit} 
+                placeholder={"computerscience"}
+                id="subreddit"
+              />
+            </InputGroup>
+            <FormGroup>
+              <DatePicker
+                selected={this.state.startDate}
+                onChange={this.onChangeStartDate}
+                showTimeSelect
+                timeFormat="HH:mm"
+                timeIntervals={10}
+                dateFormat="MM/d/yyyy h:mm aa"
+              />
+              <DatePicker
+                selected={this.state.endDate}
+                onChange={this.onChangeEndDate}
+                showTimeSelect
+                timeFormat="HH:mm"
+                timeIntervals={10}
+                dateFormat="MM/d/yyyy h:mm aa"
+              />
+            </FormGroup>
+            <Button type="submit" outline color="primary" size="sm">Cloudify</Button>
+          </Form>
         <input style={{display:"none"}} id="canvasForm" value="" onChange={this.onChangeSentimentChart}/>
         {typeof(this.state.sentiments[this.state.word]) !== "undefined" &&
           <ChartContainer 
