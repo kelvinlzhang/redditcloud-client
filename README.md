@@ -1,3 +1,19 @@
+# CS130 Project - RedditCloud Application
+This repository contains the frontend code for the RedditCloud Application
+
+## Requirements
+  - Node Package Manager (npm)
+    - Once installed, run `npm install` to install all dependencies and follow instructions at the bottom
+
+## Directory Structure
+  - public - Contains static html files
+  - src - Contains all javascript files. The most important files are:
+    - `App.js` - main React application
+    - `P5Wrapper.js` - wrapper for WordCloud
+    - `sketch.js` - WordCloud generator
+    - `ChartContainer.js` - Component responsible for generating the sentiment analysis bar graph
+    - `selen_test.js`, `CS130.side` - Selenium tests for frontend
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
