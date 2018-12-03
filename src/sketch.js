@@ -138,10 +138,10 @@ const sketch = (props) => (p) => {
 
     /**
      * Gets procedural color based on an initial value, min, and max
-     * @param {Color Base} colorBase - Color base value
+     * @param {p5.Color} colorBase - Color base value
      * @param {Integer} min - Minimum offset from base value
      * @param {Integer} max - Maximum offset from base value
-     * @return {P5 Color} - Color for wordBox
+     * @return {p5.Color} - Color for wordBox
      */ 
     getProceduralColor(colorBase, min, max) {
       return p.color(this.procColorHelper(p.red(colorBase), min, max),
@@ -173,7 +173,7 @@ const sketch = (props) => (p) => {
      * @param {Integer} freq - frequency of the word
      * @param {Integer} maxFreq - maximum of all frequencies in word dictionary
      * @param {Integer} minFreq - minimum of all frequencies in word dictionary
-     * @param {P5 Color} color - color of the text
+     * @param {p5.Color} color - color of the text
      * @param {Boolean} isBiggest - boolean of whether the word is the biggest among all those in word dictionary
      */
     constructor(text, freq, maxFreq, minFreq, color, isBiggest) {
