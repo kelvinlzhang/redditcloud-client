@@ -1,0 +1,179 @@
+{
+  "id": "26e66fe0-dee4-4dd7-8735-edd5a737d28d",
+  "version": "1.1",
+  "name": "Selenium_test",
+  "url": "https://kelvinlzhang.github.io",
+  "tests": [{
+    "id": "22b35d62-1ea9-4133-8965-6e729cabf562",
+    "name": "WordCloud",
+    "commands": [{
+      "id": "94b819ac-9894-4eb5-b962-e79ee166a04b",
+      "comment": "",
+      "command": "open",
+      "target": "/redditcloud-client/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "21a0147a-642c-4849-8c78-7db6da7bd394",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1600x860",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "354e3506-4a60-4ba9-817a-34e38dda15c5",
+      "comment": "",
+      "command": "click",
+      "target": "id=subreddit",
+      "targets": [
+        ["id=subreddit", "id"],
+        ["css=#subreddit", "css"],
+        ["css=#subreddit", "css:finder"],
+        ["xpath=//input[@id='subreddit']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/form/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "bb51ab96-ee3c-4751-85a4-1ce8b61dfc0e",
+      "comment": "",
+      "command": "type",
+      "target": "id=subreddit",
+      "targets": [
+        ["id=subreddit", "id"],
+        ["css=#subreddit", "css"],
+        ["css=#subreddit", "css:finder"],
+        ["xpath=//input[@id='subreddit']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/form/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "politics"
+    }, {
+      "id": "dc965085-d783-4549-8ca3-77225fce57d3",
+      "comment": "",
+      "command": "click",
+      "target": "css=input.react-datepicker-ignore-onclickoutside",
+      "targets": [
+        ["css=input.react-datepicker-ignore-onclickoutside", "css"],
+        ["css=.react-datepicker-ignore-onclickoutside", "css:finder"],
+        ["xpath=//input[@value='12/2/2018 5:37 PM']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/form/div[2]/div/div/input", "xpath:idRelative"],
+        ["xpath=//div/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "88c42414-661a-49f7-b9a8-44da954e0115",
+      "comment": "",
+      "command": "click",
+      "target": "css=.react-datepicker__time-list-item:nth-child(106)",
+      "targets": [
+        ["css=.react-datepicker__time-list-item:nth-child(106)", "css:finder"],
+        ["xpath=//div[@id='root']/div/form/div[2]/div[2]/div/div[3]/div[2]/div/ul/li[106]", "xpath:idRelative"],
+        ["xpath=//li[106]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "171174ad-863f-44fb-b98d-7bde717c92bd",
+      "comment": "",
+      "command": "click",
+      "target": "css=input.react-datepicker-ignore-onclickoutside",
+      "targets": [
+        ["css=input.react-datepicker-ignore-onclickoutside", "css"],
+        ["css=.react-datepicker-ignore-onclickoutside", "css:finder"],
+        ["xpath=//input[@value='12/2/2018 5:37 PM']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/form/div[2]/div[2]/div/input", "xpath:idRelative"],
+        ["xpath=//div[2]/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "7fc6d23d-0c20-4b0f-8ae4-5ce025c88c8c",
+      "comment": "",
+      "command": "click",
+      "target": "css=.react-datepicker__time-list-item:nth-child(107)",
+      "targets": [
+        ["css=.react-datepicker__time-list-item:nth-child(107)", "css:finder"],
+        ["xpath=//div[@id='root']/div/form/div[2]/div[3]/div/div[3]/div[2]/div/ul/li[107]", "xpath:idRelative"],
+        ["xpath=//li[107]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "436a56c8-94f4-4e48-8285-c74e96d5b7c9",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn",
+      "targets": [
+        ["css=.btn", "css:finder"],
+        ["xpath=//button[@type='submit']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/form/button", "xpath:idRelative"],
+        ["xpath=//button", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "698aeb28-72c0-4d05-8dce-7d81008a365f",
+      "comment": "",
+      "command": "click",
+      "target": "id=defaultCanvas0",
+      "targets": [
+        ["id=defaultCanvas0", "id"],
+        ["css=#defaultCanvas0", "css"],
+        ["css=#defaultCanvas0", "css:finder"],
+        ["xpath=//canvas[@id='defaultCanvas0']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/div/canvas", "xpath:idRelative"],
+        ["xpath=//canvas", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "1314f904-3ff3-48e2-b428-8a5544a4af04",
+      "comment": "",
+      "command": "click",
+      "target": "id=defaultCanvas0",
+      "targets": [
+        ["id=defaultCanvas0", "id"],
+        ["css=#defaultCanvas0", "css"],
+        ["css=#defaultCanvas0", "css:finder"],
+        ["xpath=//canvas[@id='defaultCanvas0']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/div/canvas", "xpath:idRelative"],
+        ["xpath=//canvas", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "2744d653-628e-4bd3-b609-e8576fda7a85",
+      "comment": "",
+      "command": "click",
+      "target": "id=defaultCanvas0",
+      "targets": [
+        ["id=defaultCanvas0", "id"],
+        ["css=#defaultCanvas0", "css"],
+        ["css=#defaultCanvas0", "css:finder"],
+        ["xpath=//canvas[@id='defaultCanvas0']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/div/canvas", "xpath:idRelative"],
+        ["xpath=//canvas", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "f45dad40-7835-4ca0-b78a-8c3759707292",
+      "comment": "",
+      "command": "click",
+      "target": "id=defaultCanvas0",
+      "targets": [
+        ["id=defaultCanvas0", "id"],
+        ["css=#defaultCanvas0", "css"],
+        ["css=#defaultCanvas0", "css:finder"],
+        ["xpath=//canvas[@id='defaultCanvas0']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/div/canvas", "xpath:idRelative"],
+        ["xpath=//canvas", "xpath:position"]
+      ],
+      "value": ""
+    }]
+  }],
+  "suites": [{
+    "id": "bbbb6287-7a1d-46c8-9294-8b93e591844f",
+    "name": "Default Suite",
+    "persistSession": false,
+    "parallel": false,
+    "timeout": 300,
+    "tests": ["22b35d62-1ea9-4133-8965-6e729cabf562"]
+  }],
+  "urls": ["https://kelvinlzhang.github.io/"],
+  "plugins": []
+}
