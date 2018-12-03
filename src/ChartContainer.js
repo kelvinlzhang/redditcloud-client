@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import './App.css';
-import data from "./chartComponents/data.json";
 import {Bar} from 'react-chartjs-2';
 
 /**
